@@ -18,7 +18,7 @@ Upstream OpenCode/Pi/Hermes adapters, hooks, manifests, release scripts and test
 
 ## Local verification
 
-JavaScript syntax, three package-contract tests, a two-skill mocked runtime smoke test, and a strict TypeScript check against modeled declarations passed. Those checks do not substitute for building against installed DSH packages or running the plugin in a real Harness profile.
+JavaScript syntax, five package-contract/regression tests, a mocked ESM import/runtime smoke test (two fixture skills), and a strict TypeScript check against modeled declarations passed. The ESM class export mismatch and metadata cleanup typo found in the first published build were corrected and covered by regression tests. Those checks do not substitute for building against installed DSH packages or running the plugin in a real Harness profile.
 
 ## Outstanding release verification
 

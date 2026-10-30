@@ -25,3 +25,21 @@ test('bootstrap maps only documented base-profile tool names', () => {
   }
   assert.match(runtime, /Browser\/computer-use capability is profile-dependent/);
 });
+
+
+test('compiled adapter named and default service exports use the same class identifier', () => {
+  const namedClass = runtime.match(/export class (\w+) extends Service/);
+  const defaultClass = runtime.match(/export default (\w+);/);
+  assert.ok(namedClass, 'named service class export is present');
+  assert.ok(defaultClass, 'default service class export is present');
+  assert.equal(namedClass[1], 'MulqiSuperpowersService');
+  assert.equal(defaultClass[1], namedClass[1]);
+  assert.doesNotMatch(runtime, /\bMulQiSuperpowersService\b/);
+});
+
+test('compiled adapter deletes metadata from the correctly named object', () => {
+  assert.match(runtime, /const passthroughMetadata = \{ \.\.\.metadata \};/);
+  assert.match(runtime, /delete passthroughMetadata\.name;/);
+  assert.match(runtime, /delete passthroughMetadata\.description;/);
+  assert.doesNotMatch(runtime, /\bpassthroughMetada\b/);
+});
