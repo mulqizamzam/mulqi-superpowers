@@ -92,9 +92,14 @@ function compareTrees(label, leftRoot, leftName, rightRoot, rightName, mode) {
   // A missing comparison tree must never pass silently, otherwise deleting the
   // directory would be enough to make drift invisible. Without --strict it is a
   // warning (a fresh clone has no node_modules yet); with --strict it fails.
+  //
+  // The fork is the exception: it was archived on 2026-11-01, so its absence is
+  // the expected state. Note it rather than warn, otherwise every run emits a
+  // permanent warning and people learn to ignore the warning channel.
   if (right.size === 0) {
     const message = label + ': ' + rightRoot + ' tidak ada, perbandingan dilewati'
     if (mode === 'hard' && strict) fail(message)
+    else if (mode === 'fork') note(message + ' (fork sudah diarsipkan)')
     else warn(message)
     return
   }
